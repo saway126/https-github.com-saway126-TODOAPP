@@ -35,7 +35,7 @@ class TodoStore {
   getSearchTerm(): string {
     return this.searchTerm;
   }
-  
+
   getFocusedTodoId(): string | null {
     return this.focusedTodoId;
   }
@@ -60,13 +60,28 @@ class TodoStore {
     this.notify();
   }
 
+  addTodos(texts: string[]) {
+    if (texts.length === 0) return;
+
+    const newTodos: Todo[] = texts.map(text => ({
+      id: crypto.randomUUID(),
+      text: text.trim(),
+      completed: false,
+      createdAt: new Date().toISOString(),
+    }));
+
+    this.todos.unshift(...newTodos);
+    this.save();
+    this.notify();
+  }
+
   deleteTodo(id: string) {
     this.todos = this.todos.filter((todo) => todo.id !== id);
     this.save();
     this.notify();
     this.updateFocus();
   }
-  
+
   updateTodoText(id: string, text: string) {
     this.todos = this.todos.map((todo) =>
       todo.id === id ? { ...todo, text: text.trim() } : todo
@@ -88,7 +103,7 @@ class TodoStore {
     this.notify();
     this.updateFocus();
   }
-  
+
   setSearchTerm(term: string) {
     this.searchTerm = term;
     this.notify();
@@ -103,12 +118,12 @@ class TodoStore {
   updateFocus() {
     const displayedTodos = this.getFilteredTodos();
     if (displayedTodos.length > 0 && !displayedTodos.find(t => t.id === this.focusedTodoId)) {
-        this.setFocusedTodoId(displayedTodos[0].id);
+      this.setFocusedTodoId(displayedTodos[0].id);
     } else if (displayedTodos.length === 0) {
-        this.setFocusedTodoId(null);
+      this.setFocusedTodoId(null);
     } else {
-        // If focus is already valid, still notify to re-render
-        this.notify();
+      // If focus is already valid, still notify to re-render
+      this.notify();
     }
   }
 
@@ -121,12 +136,12 @@ class TodoStore {
       writeTodos(this.todos);
     }, 200);
   }
-  
+
   // OBSERVER PATTERN
   onChange(listener: () => void) {
     this.listeners.push(listener);
   }
-  
+
   private notify() {
     this.listeners.forEach(listener => listener());
   }

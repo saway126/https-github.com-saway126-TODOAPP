@@ -1,7 +1,8 @@
 import { todoStore } from "../services/todoStore";
 import { FilterType } from "../types";
-import { showToast, clearAddTodoInput } from "./dom";
+import { showToast, clearAddTodoInput, getElements, toggleImportModal } from "./dom";
 import { THEME_STORAGE_KEY } from "../main";
+import { AIParser } from "../services/aiParser";
 
 const addTodoForm = document.getElementById("add-todo-form") as HTMLFormElement;
 const addTodoInput = document.getElementById("add-todo-input") as HTMLInputElement;
@@ -11,29 +12,29 @@ const searchInput = document.getElementById("search-input") as HTMLInputElement;
 const themeToggle = document.getElementById('theme-toggle') as HTMLInputElement;
 
 const handleAddTodo = (e: SubmitEvent) => {
-  e.preventDefault();
-  const text = addTodoInput.value;
-  if (text.trim()) {
-    todoStore.addTodo(text);
-    showToast("Todo added successfully!");
-    clearAddTodoInput();
-  }
+    e.preventDefault();
+    const text = addTodoInput.value;
+    if (text.trim()) {
+        todoStore.addTodo(text);
+        showToast("Todo added successfully!");
+        clearAddTodoInput();
+    }
 };
 
 const handleTodoListClick = (e: MouseEvent) => {
-  const target = e.target as HTMLElement;
-  const li = target.closest("li");
-  if (!li) return;
-  const id = li.dataset.id!;
+    const target = e.target as HTMLElement;
+    const li = target.closest("li");
+    if (!li) return;
+    const id = li.dataset.id!;
 
-  if (target.classList.contains("todo-checkbox")) {
-    todoStore.toggleTodoCompletion(id);
-  } else if (target.closest(".delete-btn")) {
-    todoStore.deleteTodo(id);
-    showToast("Todo deleted.");
-  } else if (target.closest(".edit-btn")) {
-    enterEditMode(li, id);
-  }
+    if (target.classList.contains("todo-checkbox")) {
+        todoStore.toggleTodoCompletion(id);
+    } else if (target.closest(".delete-btn")) {
+        todoStore.deleteTodo(id);
+        showToast("Todo deleted.");
+    } else if (target.closest(".edit-btn")) {
+        enterEditMode(li, id);
+    }
 };
 
 const handleTodoListDoubleClick = (e: MouseEvent) => {
@@ -76,7 +77,7 @@ const enterEditMode = (li: HTMLLIElement, id: string) => {
 
     const saveChanges = () => {
         const newText = editInput.value;
-        if (newText.trim() && newText !== todoStore.getTodos().find(t=>t.id === id)?.text) {
+        if (newText.trim() && newText !== todoStore.getTodos().find(t => t.id === id)?.text) {
             todoStore.updateTodoText(id, newText);
             showToast("Todo updated.");
         }
@@ -132,9 +133,9 @@ const handleGlobalKeyDown = (e: KeyboardEvent) => {
             }
             break;
         case " ": // Spacebar
-             e.preventDefault();
-             todoStore.toggleTodoCompletion(focusedId);
-             break;
+            e.preventDefault();
+            todoStore.toggleTodoCompletion(focusedId);
+            break;
         case "e":
             const li = todoList.querySelector(`li[data-id="${focusedId}"]`);
             if (li) enterEditMode(li as HTMLLIElement, focusedId);
@@ -148,11 +149,48 @@ const handleGlobalKeyDown = (e: KeyboardEvent) => {
 };
 
 export const initEventListeners = () => {
-  addTodoForm.addEventListener("submit", handleAddTodo);
-  todoList.addEventListener("click", handleTodoListClick);
-  todoList.addEventListener("dblclick", handleTodoListDoubleClick);
-  filterControls.addEventListener('click', handleFilterClick);
-  searchInput.addEventListener('input', handleSearchInput);
-  themeToggle.addEventListener('change', handleThemeToggle);
-  window.addEventListener("keydown", handleGlobalKeyDown);
+    addTodoForm.addEventListener("submit", handleAddTodo);
+    todoList.addEventListener("click", handleTodoListClick);
+    todoList.addEventListener("dblclick", handleTodoListDoubleClick);
+    filterControls.addEventListener('click', handleFilterClick);
+    searchInput.addEventListener('input', handleSearchInput);
+    themeToggle.addEventListener('change', handleThemeToggle);
+    window.addEventListener("keydown", handleGlobalKeyDown);
+
+    // Import Feature Events
+    const { openImportBtn, closeModalBtn, processImportBtn, importTextarea, importModal } = getElements();
+
+    if (openImportBtn) {
+        openImportBtn.addEventListener("click", () => toggleImportModal(true));
+    }
+
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener("click", () => toggleImportModal(false));
+    }
+
+    if (importModal) {
+        // Close on click outside
+        importModal.addEventListener("click", (e) => {
+            if (e.target === importModal) toggleImportModal(false);
+        });
+    }
+
+    if (processImportBtn) {
+        processImportBtn.addEventListener("click", () => {
+            const text = importTextarea.value;
+            if (!text.trim()) {
+                showToast("Please paste some text first.");
+                return;
+            }
+
+            const tasks = AIParser.parseTasks(text);
+            if (tasks.length > 0) {
+                todoStore.addTodos(tasks);
+                showToast(`Imported ${tasks.length} tasks!`);
+                toggleImportModal(false);
+            } else {
+                showToast("No tasks found in the text.");
+            }
+        });
+    }
 };

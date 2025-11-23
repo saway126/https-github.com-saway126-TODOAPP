@@ -8,6 +8,24 @@ const elements = {
   filterControls: document.getElementById("filter-controls")!,
   searchInput: document.getElementById("search-input") as HTMLInputElement,
   toastContainer: document.getElementById("toast-container")!,
+  // Import Modal Elements
+  importModal: document.getElementById("import-modal")!,
+  openImportBtn: document.getElementById("open-import-btn")!,
+  closeModalBtn: document.getElementById("close-modal-btn")!,
+  processImportBtn: document.getElementById("process-import-btn")!,
+  importTextarea: document.getElementById("import-textarea") as HTMLTextAreaElement,
+};
+
+export const getElements = () => elements;
+
+export const toggleImportModal = (show: boolean) => {
+  if (show) {
+    elements.importModal.classList.remove("hidden");
+    elements.importTextarea.focus();
+  } else {
+    elements.importModal.classList.add("hidden");
+    elements.importTextarea.value = ""; // Clear on close
+  }
 };
 
 /**
@@ -19,7 +37,7 @@ const elements = {
 const createTodoItemHTML = (todo: Todo, isFocused: boolean): string => {
   const completedClass = todo.completed ? "completed" : "";
   const focusedClass = isFocused ? "focused" : "";
-  
+
   return `
     <li data-id="${todo.id}" class="${focusedClass}">
       <input type="checkbox" class="todo-checkbox" ${todo.completed ? "checked" : ""}>
@@ -44,33 +62,33 @@ const createTodoItemHTML = (todo: Todo, isFocused: boolean): string => {
 };
 
 const renderTodoList = () => {
-    const todosToRender = todoStore.getFilteredTodos();
-    const focusedId = todoStore.getFocusedTodoId();
+  const todosToRender = todoStore.getFilteredTodos();
+  const focusedId = todoStore.getFocusedTodoId();
 
-    if (todosToRender.length === 0) {
-        elements.todoList.innerHTML = `<li class="empty-state">No todos found. Try a different filter or create a new one!</li>`;
-        return;
-    }
-    
-    elements.todoList.innerHTML = todosToRender
-        .map(todo => createTodoItemHTML(todo, todo.id === focusedId))
-        .join("");
-    
-    if (focusedId) {
-        const focusedElement = elements.todoList.querySelector(`[data-id="${focusedId}"]`);
-        focusedElement?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-    }
+  if (todosToRender.length === 0) {
+    elements.todoList.innerHTML = `<li class="empty-state">No todos found. Try a different filter or create a new one!</li>`;
+    return;
+  }
+
+  elements.todoList.innerHTML = todosToRender
+    .map(todo => createTodoItemHTML(todo, todo.id === focusedId))
+    .join("");
+
+  if (focusedId) {
+    const focusedElement = elements.todoList.querySelector(`[data-id="${focusedId}"]`);
+    focusedElement?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
 };
 
 const renderFilters = () => {
-    const currentFilter = todoStore.getFilter();
-    elements.filterControls.querySelectorAll('button').forEach(button => {
-        if (button.dataset.filter === currentFilter) {
-            button.classList.add('active');
-        } else {
-            button.classList.remove('active');
-        }
-    });
+  const currentFilter = todoStore.getFilter();
+  elements.filterControls.querySelectorAll('button').forEach(button => {
+    if (button.dataset.filter === currentFilter) {
+      button.classList.add('active');
+    } else {
+      button.classList.remove('active');
+    }
+  });
 };
 
 /**
@@ -88,23 +106,23 @@ export const render = () => {
  * @param message The message to display.
  */
 export const showToast = (message: string) => {
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.innerHTML = `
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `
         <span class="toast-message">${message}</span>
         <button class="toast-close">&times;</button>
     `;
-    elements.toastContainer.appendChild(toast);
+  elements.toastContainer.appendChild(toast);
 
-    const close = () => {
-        toast.remove();
-    };
+  const close = () => {
+    toast.remove();
+  };
 
-    toast.querySelector('.toast-close')!.addEventListener('click', close);
+  toast.querySelector('.toast-close')!.addEventListener('click', close);
 
-    setTimeout(close, 3000);
+  setTimeout(close, 3000);
 };
 
 export const clearAddTodoInput = () => {
-    elements.addTodoInput.value = "";
+  elements.addTodoInput.value = "";
 };
