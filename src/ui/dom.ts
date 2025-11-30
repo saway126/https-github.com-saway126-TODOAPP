@@ -19,7 +19,7 @@ const elements = {
   pasteImportBtn: document.getElementById("paste-import-btn")!,
   importTextarea: document.getElementById("import-textarea") as HTMLTextAreaElement,
   langToggleBtn: document.getElementById("lang-toggle-btn")!,
-  langText: document.querySelector(".lang-text") as HTMLSpanElement,
+  langText: document.querySelector("#lang-toggle-btn .lang-text") as HTMLSpanElement,
 
   // Settings Elements
   openSettingsBtn: document.getElementById("open-settings-btn")!,

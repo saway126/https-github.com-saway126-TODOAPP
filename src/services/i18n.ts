@@ -77,7 +77,8 @@ const LANG_STORAGE_KEY = 'todo-app-lang';
 
 export const getLanguage = (): Language => {
     const saved = localStorage.getItem(LANG_STORAGE_KEY) as Language;
-    return saved === 'ko' ? 'ko' : 'en';
+    if (saved) return saved;
+    return 'ko'; // Default to Korean as requested
 };
 
 export const setLanguage = (lang: Language) => {

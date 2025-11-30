@@ -208,201 +208,8 @@ body {
 .input-wrapper {
   position: relative;
   margin-bottom: 1.5rem;
-}
-
-input[type="text"],
-textarea {
-  width: 100%;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--card-radius);
-  padding: 1rem 1.5rem;
-  color: var(--text-color);
-  font-family: var(--font-family);
-  font-size: 1rem;
-  backdrop-filter: blur(5px);
-  transition: all 0.3s ease;
-}
-
-input[type="text"]:focus,
-textarea:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/* Todo List */
-.todos-section {
-  flex: 1;
-  overflow-y: auto;
-  padding-right: 0.5rem;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-.todo-item {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--card-radius);
-  padding: 1rem;
-  margin-bottom: 0.75rem;
   display: flex;
   align-items: center;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-}
-
-.todo-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-.todo-item.completed {
-  opacity: 0.6;
-}
-
-.todo-item.completed .todo-text {
-  text-decoration: line-through;
-  color: var(--secondary-text);
-}
-
-.todo-checkbox {
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--primary-color);
-  border-radius: 50%;
-  margin-right: 1rem;
-  cursor: pointer;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.todo-checkbox:checked {
-  background: var(--primary-color);
-  box-shadow: 0 0 10px var(--primary-color);
-}
-
-.todo-text-container {
-  flex: 1;
-}
-
-/* Badges */
-.badge {
-  font-size: 0.75rem;
-  padding: 0.2rem 0.5rem;
-  border-radius: 8px;
-  margin-left: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid var(--glass-border);
-}
-
-.priority-high {
-  color: var(--danger-color);
-  border-color: var(--danger-color);
-}
-
-.priority-medium {
-  color: #ffd700;
-  border-color: #ffd700;
-}
-
-.priority-low {
-  color: var(--success-color);
-  border-color: var(--success-color);
-}
-
-/* Buttons */
-.icon-btn,
-.primary-btn,
-.secondary-btn {
-  background: transparent;
-  border: none;
-  color: var(--secondary-text);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.icon-btn:hover {
-  color: var(--primary-color);
-  transform: scale(1.1);
-  text-shadow: 0 0 10px var(--primary-color);
-}
-
-.primary-btn {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--card-radius);
-  font-weight: bold;
-  box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
-}
-
-.primary-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5);
-}
-
-.secondary-btn {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--text-color);
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--card-radius);
-  border: 1px solid var(--glass-border);
-}
-
-.secondary-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* Modals */
-.modal {
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(5px);
-}
-
-.modal-content {
-  background: rgba(20, 20, 40, 0.9);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--card-radius);
-  box-shadow: var(--glass-shadow);
-  color: var(--text-color);
-}
-
-.modal-header {
-  border-bottom: 1px solid var(--glass-border);
-}
-
-.modal-footer {
-  border-top: 1px solid var(--glass-border);
-}
-
-/* Utilities */
-.hidden {
-  display: none !important;
-}
-
-.icon {
-  width: 24px;
-  height: 24px;
 }
 
 input[type="text"],
@@ -411,7 +218,7 @@ textarea {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--card-radius);
-  padding: 1rem 1.5rem;
+  padding: 1rem 3.5rem 1rem 1.5rem;
   color: var(--text-color);
   font-family: var(--font-family);
   font-size: 1rem;
@@ -425,6 +232,32 @@ textarea:focus {
   border-color: var(--primary-color);
   box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
   background: rgba(255, 255, 255, 0.1);
+}
+
+.input-wrapper button[type="submit"] {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-wrapper button[type="submit"]:hover {
+  background: rgba(0, 210, 255, 0.2);
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
+}
+
+.input-wrapper button[type="submit"] .icon {
+  width: 24px;
+  height: 24px;
 }
 
 /* Todo List */
@@ -674,6 +507,7 @@ textarea:focus {
 .banner-content .icon {
   font-size: 1.5rem;
   animation: float 3s ease-in-out infinite;
+  margin-right: 1rem;
 }
 
 .banner-content .message {
@@ -714,11 +548,237 @@ textarea:focus {
 }
 
 .ai-breakdown-btn:hover {
-  opacity: 1;
-  transform: scale(1.2) rotate(15deg);
-  text-shadow: 0 0 10px #ffd700;
-}
+  .priority-low {
+    color: var(--success-color);
+    border-color: var(--success-color);
+  }
 
-.ai-breakdown-btn .icon {
-  font-size: 1.2rem;
-}
+  /* Buttons */
+  .icon-btn,
+  .primary-btn,
+  .secondary-btn {
+    background: transparent;
+    border: none;
+    color: var(--secondary-text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .icon-btn:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+    text-shadow: 0 0 10px var(--primary-color);
+  }
+
+  .primary-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--card-radius);
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+  }
+
+  .primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5);
+  }
+
+  .secondary-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--card-radius);
+    border: 1px solid var(--glass-border);
+  }
+
+  .secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Modals */
+  .modal {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+  }
+
+  .modal-content {
+    background: rgba(20, 20, 40, 0.9);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--card-radius);
+    box-shadow: var(--glass-shadow);
+    color: var(--text-color);
+  }
+
+  .modal-header {
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .modal-footer {
+    border-top: 1px solid var(--glass-border);
+  }
+
+  /* Utilities */
+  .hidden {
+    display: none !important;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .icon-small {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Code Block in Details */
+  .code-block {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 1rem;
+    font-family: 'Fira Code', monospace;
+    color: #a5d6ff;
+    white-space: pre-wrap;
+  }
+
+  /* Header Actions */
+  .header-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .glass-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    color: var(--text-color);
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+  }
+
+  .glass-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+    border-color: var(--primary-color);
+  }
+
+  .glass-btn .icon {
+    font-size: 1.2rem;
+  }
+
+  /* Cosmic Banner */
+  .cosmic-banner {
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.2));
+    border: 1px solid var(--primary-color);
+    border-radius: var(--card-radius);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    animation: slideDown 0.5s ease-out;
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
+  }
+
+  .banner-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .banner-content .icon {
+    font-size: 1.5rem;
+    animation: float 3s ease-in-out infinite;
+    margin-right: 1rem;
+  }
+
+  .banner-content .message {
+    font-size: 1rem;
+    color: #e0f2fe;
+    font-style: italic;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  /* AI Breakdown Button */
+  .ai-breakdown-btn {
+    color: #ffd700;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+
+  .ai-breakdown-btn:hover {
+    opacity: 1;
+    transform: scale(1.2) rotate(15deg);
+    text-shadow: 0 0 10px #ffd700;
+  }
+
+  .ai-breakdown-btn .icon {
+    font-size: 1.2rem;
+  }
+
+  /* Todo Actions */
+  .todo-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 1rem;
+  }
+
+  .todo-actions button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--secondary-text);
+    transition: all 0.3s ease;
+    padding: 0.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .todo-actions button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--primary-color);
+    transform: scale(1.1);
+  }
+
+  .todo-actions .delete-btn:hover {
+    color: var(--danger-color);
+  }
